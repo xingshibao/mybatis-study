@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!--configuration下面的标签元素是有顺序的-->
+<configuration>
+    <!-- 在 properties 元素体内指定的属性首先被读取。
+        然后根据 properties 元素中的 resource 属性读取类路径下属性文件或根据 url 属性指定的路径读取属性文件，并覆盖已读取的同名属性。
+        最后读取作为方法参数传递的属性，并覆盖已读取的同名属性。 -->
+    <properties resource="config.properties">
+        <property name="username" value="root"/>
+        <!--<property name="password" value="root"/>-->
+        <property name="org.apache.ibatis.parsing.PropertyParser.enable-default-value" value="true"/> <!-- Enable this feature -->
+        <property name="org.apache.ibatis.parsing.PropertyParser.default-value-separator" value="?:"/> <!-- Change default value of separator -->
+    </properties>
+
+    <typeAliases>
+        <typeAlias type="com.xsb.study.bean.UserBean" alias="UserBean"/>
+    </typeAliases>
+
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <!--实际是配置了一个数据源工厂-->
+            <dataSource type="com.xsb.study.datasource.MyDruidDataSourceFactory">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password?:root}"/>
+                <property name="initialSize" value="2"/>
+                <property name="maxActive" value="2"/>
+                <property name="minIdle" value="2"/>
+                <property name="validationQuery" value="select 1 as num"/>
+                <property name="testWhileIdle" value="true"/>
+                <property name="testOnBorrow" value="false"/>
+                <property name="timeBetweenEvictionRunsMillis" value="1800000"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <mapper resource="mapper/UserMapper.xml"/>
+    </mappers>
+</configuration>

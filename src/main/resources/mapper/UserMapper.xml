@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xsb.study.mapper.UserMapper">
+  <select id="selectById" resultType="UserBean">
+    SELECT
+      id,
+      email,
+      username AS userName,
+      role_id AS roleId,
+      password_hash AS passwordHash,
+      confirmed
+    FROM
+      users
+    WHERE
+      id = #{id}
+  </select>
+</mapper>
