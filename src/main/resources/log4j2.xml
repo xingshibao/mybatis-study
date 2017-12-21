@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--log4j配置文件参考文档  http://logging.apache.org/log4j/2.x/manual/configuration.html-->
+<!--log4j2常用的配置  https://my.oschina.net/kkrgwbj/blog/734530-->
 <!--The level of internal Log4j events that should be logged to the console. log4j在初始化的时候内部打印日志的级别-->
 <configuration status="info">
     <Properties>
