@@ -4,6 +4,8 @@ import com.xsb.study.service.UserService;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
 
@@ -12,6 +14,8 @@ import java.io.InputStream;
  * @since 2017-12-20 18:04
  */
 public class Booter {
+
+    private static final Logger logger = LoggerFactory.getLogger(Booter.class);
 
     private static SqlSessionFactory sqlSessionFactory;
 
@@ -28,7 +32,27 @@ public class Booter {
     private static UserService userService = new UserService();
 
     public static void main(String[] args) {
-//        userService.getById_old(sqlSessionFactory, 1);
+        printPlant();
         userService.getById_mapper(sqlSessionFactory, 1);
+    }
+
+    /**
+     * 打印个小飞机，代表项目起来啦
+     */
+    private static void printPlant() {
+        logger.info("--------------------------------------------------------------------------------");
+        logger.info("|                                      |                                       |");
+        logger.info("|                                --====|====--                                 |");
+        logger.info("|                                      |                                       |");
+        logger.info("|                                                                              |");
+        logger.info("|                                  .-'''''-.                                   |");
+        logger.info("|                                .'_________'.                                 |");
+        logger.info("|                               /_/_|__|__|_\\_\\                                |");
+        logger.info("|                              ;'-._       _.-';                               |");
+        logger.info("|         ,--------------------|    `-. .-'    |--------------------,          |");
+        logger.info("|          ``''--..__    ___   ;       '       ;   ___    __..--''``           |");
+        logger.info("|                    `'-// \\\\.._\\             /_..// \\\\- '`                    |");
+        logger.info("|                       \\\\_//    '._       _.'      \\\\_//                      |");
+        logger.info("--------------------------------------------------------------------------------");
     }
 }

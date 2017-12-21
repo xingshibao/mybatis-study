@@ -3,6 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <!--configuration下面的标签元素是有顺序的-->
+<!--properties -> settings -> typeAliases -> typeHandlers -> objectFactory -> objectWrapperFactory -> plugins -> environments -> databaseIdProvider -> mappers-->
 <configuration>
     <!-- 在 properties 元素体内指定的属性首先被读取。
         然后根据 properties 元素中的 resource 属性读取类路径下属性文件或根据 url 属性指定的路径读取属性文件，并覆盖已读取的同名属性。
@@ -14,6 +15,11 @@
         <property name="org.apache.ibatis.parsing.PropertyParser.default-value-separator" value="?:"/> <!-- Change default value of separator -->
     </properties>
 
+    <settings>
+        <!--目前看打印出的sql语句都是trace和debug级别的，调试时能看到sql就行了，线上也没必要打-->
+        <setting name="logImpl" value="SLF4J"/>
+    </settings>
+    
     <typeAliases>
         <typeAlias type="com.xsb.study.bean.UserBean" alias="UserBean"/>
     </typeAliases>
@@ -37,7 +43,7 @@
             </dataSource>
         </environment>
     </environments>
-
+    
     <mappers>
         <mapper resource="mapper/UserMapper.xml"/>
     </mappers>

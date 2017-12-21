@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--log4j配置文件参考文档  http://logging.apache.org/log4j/2.x/manual/configuration.html-->
+<!--The level of internal Log4j events that should be logged to the console. log4j在初始化的时候内部打印日志的级别-->
+<configuration status="info">
+    <Properties>
+        <Property name="filename">target/userMapper.log</Property>
+    </Properties>
+
+    <appenders>
+        <!--target还可以配置成SYSTEM_ERR，相当于System.err.println-->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy/MM/dd HH:mm:ss.SSS} %t [%p] %c{1} (%F:%L) %msg%n" />
+        </Console>
+
+        <File name="log" fileName="target/test.log" append="true">
+            <PatternLayout pattern="%d{yyyy/MM/dd HH:mm:ss.SSS} %t [%p] %c{1} (%F:%L) %msg%n" />
+        </File>
+
+        <File name="userMapper" fileName="${filename}" append="true">
+            <PatternLayout pattern="%d{yyyy/MM/dd HH:mm:ss.SSS} %t [%p] %c{1} (%F:%L) %msg%n" />
+        </File>
+
+        <!--添加过滤器ThresholdFilter,可以有选择的输出某个级别以上的类别  onMatch="ACCEPT" onMismatch="DENY"意思是匹配就接受,否则直接拒绝  -->
+        <File name="ERROR" fileName="target/error.log">
+            <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="%d{yyyy/MM/dd HH:mm:ss.SSS} %t [%p] %c{1} (%F:%L) %msg%n" />
+        </File>
+
+        <RollingFile name="rollingFile" fileName="target/roll.log" filePattern="target/$${date:yyyy-MM-dd}/app-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="%d{yyyy/MM/dd HH:mm:ss.SSS} %t [%p] %c{1} (%F:%L) %msg%n" />
+            <SizeBasedTriggeringPolicy size="500 MB" />
+        </RollingFile>
+    </appenders>
+
+    <loggers>
+        <!--additivity配置为false，和logger匹配，则事件打印日志事件不继续向下传，到此为止-->
+        <Logger name="com.xsb.study.mapper.UserMapper" level="trace" additivity="false">
+            <AppenderRef ref="userMapper"/>
+        </Logger>
+        <!--Note that by default Log4j assigns the root logger to Level.ERROR-->
+        <root level="trace">
+            <appender-ref ref="Console"/>
+            <appender-ref ref="log"/>
+            <appender-ref ref="rollingFile"/>
+            <appender-ref ref="ERROR"/>
+        </root>
+    </loggers>
+</configuration>
