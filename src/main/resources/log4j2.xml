@@ -27,6 +27,15 @@
             <PatternLayout pattern="%d{yyyy/MM/dd HH:mm:ss.SSS} %t [%p] %c{1} (%F:%L) %msg%n" />
         </File>
 
+        <File name="WARN" fileName="target/warn.log">
+            <!--需要满足所有fiter的过滤才会写入文件， NEUTRAL的含义是不确定是接受还是拒绝，交由下一个过滤器进行判断-->
+            <Filters>
+                <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="NEUTRAL"/>   <!--第一层-->
+                <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY"/>       <!--第二层-->
+            </Filters>
+            <PatternLayout pattern="%d{yyyy/MM/dd HH:mm:ss.SSS} %t [%p] %c{1} (%F:%L) %msg%n" />
+        </File>
+
         <RollingFile name="rollingFile" fileName="target/roll.log" filePattern="target/$${date:yyyy-MM-dd}/app-%d{yyyy-MM-dd}-%i.log.gz">
             <PatternLayout pattern="%d{yyyy/MM/dd HH:mm:ss.SSS} %t [%p] %c{1} (%F:%L) %msg%n" />
             <SizeBasedTriggeringPolicy size="500 MB" />
